@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
     
     if ( argc < 3 )
     {
-        std::cerr << "Usage: mdio_poke \033[32;1miface\033[0m \033[33;1m0xregister\033[0m \033[33;1m0xvalue\033[0m" << std::endl;
+        std::cerr << "Usage: mdio_poke \033[32;1miface\033[0m \033[33;1m0xregister\033[0m [\033[33;1m0xvalue\033[0m]" << std::endl;
         return 1;
     }
     
