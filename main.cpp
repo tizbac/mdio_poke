@@ -57,7 +57,7 @@ void mdio_write(int skfd, int phy_id, int location, int value)
 
 int main(int argc, char **argv) {
     
-    if ( argc < 4 )
+    if ( argc < 3 )
     {
         std::cerr << "Usage: mdio_poke \033[32;1miface\033[0m \033[33;1m0xregister\033[0m \033[33;1m0xvalue\033[0m" << std::endl;
         return 1;
@@ -92,14 +92,22 @@ int main(int argc, char **argv) {
 	}
 	
 	unsigned reg = std::stoul(argv[2], nullptr, 16);
-    unsigned newval = std::stoul(argv[3], nullptr, 16);
-	
-	u16 *data = (u16 *)(&ifr.ifr_data);
-	u32 *data32 = (u32 *)(&ifr.ifr_data);
+    unsigned newval = 0x0;
+    u16 *data = (u16 *)(&ifr.ifr_data);
+    u32 *data32 = (u32 *)(&ifr.ifr_data);
     unsigned phy_id = data[0];
-	mdio_write(skfd, phy_id, reg, newval);
     
-    fprintf(stderr, "Set %04x to %04x\n" , reg, newval);
+    if ( argc >= 4 ) {
+    
+        newval = std::stoul(argv[3], nullptr, 16);
+        
+        
+        
+        mdio_write(skfd, phy_id, reg, newval);
+        
+        fprintf(stderr, "Set %04x to %04x\n" , reg, newval);
+    
+    }
     
     
     newval = mdio_read(skfd, phy_id, reg);
